@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KEE Audio CODEC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>KEE Audio CODEC</h1>
+    <p class="subtitle">Compress audio into <code>.kee</code> format and restore it back.</p>
+  </header>
+
+  <main>
+    <!-- ===== Mode selector ===== -->
+    <div class="mode-selector">
+      <button id="btn-mode-encode" class="mode-btn active" onclick="showPanel('encode')">Encode (Compress)</button>
+      <button id="btn-mode-decode" class="mode-btn" onclick="showPanel('decode')">Decode (Decompress)</button>
+    </div>
+
+    <!-- ===== ENCODE panel ===== -->
+    <section id="panel-encode" class="panel">
+      <h2>Encode</h2>
+
+      <!-- Step 1: browse -->
+      <div class="step" id="enc-step-browse">
+        <label class="file-label" for="enc-file-input">Browse audio file</label>
+        <input type="file" id="enc-file-input" accept=".wav,.flac,.ogg,.aiff" onchange="onEncFileSelected(this)">
+        <p id="enc-file-name" class="file-name"></p>
+      </div>
+
+      <!-- Downsample factor (optional) -->
+      <div class="option-row">
+        <label for="enc-d-factor">Downsample factor (leave empty for Auto):</label>
+        <input type="number" id="enc-d-factor" min="1" max="64" placeholder="Auto">
+      </div>
+
+      <!-- Step 2: upload + encode -->
+      <button id="btn-encode" class="action-btn" disabled onclick="runEncode()">Upload &amp; Encode</button>
+
+      <!-- Progress -->
+      <div id="enc-progress" class="progress hidden">
+        <div class="spinner"></div>
+        <span>Encoding...</span>
+      </div>
+
+      <!-- Error -->
+      <p id="enc-error" class="error-msg hidden"></p>
+
+      <!-- Step 3: results + download -->
+      <div id="enc-result" class="result-box hidden">
+        <h3>Encoding complete</h3>
+        <table class="info-table">
+          <tr><td>Original size</td><td id="enc-orig-size"></td></tr>
+          <tr><td>Compressed size</td><td id="enc-comp-size"></td></tr>
+          <tr><td>Ratio</td><td id="enc-ratio"></td></tr>
+          <tr><td>fs original</td><td id="enc-fs-orig"></td></tr>
+          <tr><td>fs new</td><td id="enc-fs-new"></td></tr>
+          <tr><td>D (factor)</td><td id="enc-d"></td></tr>
+          <tr><td>Channels</td><td id="enc-channels"></td></tr>
+          <tr><td>Duration</td><td id="enc-duration"></td></tr>
+        </table>
+        <button id="btn-download-kee" class="download-btn" onclick="downloadKee()">Download metafile (.kee)</button>
+      </div>
+    </section>
+
+    <!-- ===== DECODE panel ===== -->
+    <section id="panel-decode" class="panel hidden">
+      <h2>Decode</h2>
+
+      <!-- Option A: browse .kee -->
+      <div class="step" id="dec-step-browse">
+        <label class="file-label" for="dec-file-input">Browse .kee file</label>
+        <input type="file" id="dec-file-input" accept=".kee" onchange="onDecFileSelected(this)">
+        <p id="dec-file-name" class="file-name"></p>
+      </div>
+
+      <!-- Option B: use last encoded metafile -->
+      <div class="option-row" id="dec-reuse-row">
+        <label>
+          <input type="checkbox" id="dec-reuse-checkbox" onchange="onReuseToggle()">
+          Use the metafile from the last encode
+        </label>
+        <p id="dec-reuse-info" class="file-name"></p>
+      </div>
+
+      <!-- Decode button -->
+      <button id="btn-decode" class="action-btn" disabled onclick="runDecode()">Decode</button>
+
+      <!-- Progress -->
+      <div id="dec-progress" class="progress hidden">
+        <div class="spinner"></div>
+        <span>Decoding...</span>
+      </div>
+
+      <!-- Error -->
+      <p id="dec-error" class="error-msg hidden"></p>
+
+      <!-- Results + download -->
+      <div id="dec-result" class="result-box hidden">
+        <h3>Decoding complete</h3>
+        <table class="info-table">
+          <tr><td>fs original</td><td id="dec-fs-orig"></td></tr>
+          <tr><td>D (factor)</td><td id="dec-d"></td></tr>
+          <tr><td>Duration</td><td id="dec-duration"></td></tr>
+        </table>
+        <button id="btn-download-wav" class="download-btn" onclick="downloadWav()">Download restored file (.wav)</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>KEE Audio CODEC &mdash; Custom signal-processing CODEC</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
