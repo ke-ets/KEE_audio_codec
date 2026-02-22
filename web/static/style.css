@@ -1,0 +1,235 @@
+/* ===== Reset & base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0f1117;
+  --surface:  #1a1d27;
+  --border:   #2a2d3a;
+  --text:     #e1e4ed;
+  --muted:    #8b8fa3;
+  --accent:   #6c63ff;
+  --accent-h: #8a83ff;
+  --success:  #2dd4a8;
+  --error:    #f87171;
+  --radius:   10px;
+}
+
+body {
+  font-family: "Segoe UI", Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+}
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 0.03em;
+}
+header .subtitle {
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+header code {
+  background: var(--surface);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ===== Main ===== */
+main {
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  flex: 1;
+}
+
+/* ===== Mode selector ===== */
+.mode-selector {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.mode-btn {
+  flex: 1;
+  padding: 0.75rem;
+  background: var(--surface);
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.mode-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ===== Panel ===== */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.panel h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+.hidden { display: none !important; }
+
+/* ===== Steps ===== */
+.step { margin-bottom: 1rem; }
+
+.file-label {
+  display: inline-block;
+  padding: 0.55rem 1.2rem;
+  background: var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.file-label:hover { background: var(--accent); color: #fff; }
+
+input[type="file"] { display: none; }
+
+.file-name {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ===== Options ===== */
+.option-row {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+.option-row label {
+  font-size: 0.95rem;
+}
+.option-row input[type="number"] {
+  width: 100px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* ===== Buttons ===== */
+.action-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.action-btn:hover:not(:disabled) { background: var(--accent-h); }
+.action-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.download-btn {
+  margin-top: 0.8rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--success);
+  color: #0f1117;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.download-btn:hover { filter: brightness(1.1); }
+
+/* ===== Progress ===== */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+.spinner {
+  width: 20px; height: 20px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Results ===== */
+.result-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.result-box h3 {
+  color: var(--success);
+  margin-bottom: 0.6rem;
+}
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.5rem;
+}
+.info-table td {
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.info-table td:first-child {
+  color: var(--muted);
+  width: 45%;
+}
+
+/* ===== Error ===== */
+.error-msg {
+  color: var(--error);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ===== Checkbox ===== */
+input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 16px; height: 16px;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}
