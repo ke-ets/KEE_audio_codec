@@ -89,6 +89,14 @@ The web interface provides:
 3. Reconstruction low-pass filter at `fs_new / 2` to keep only the baseband.
 4. Write restored audio at `fs_original`.
 
+## Copilot Skill
+
+A [GitHub Copilot custom skill](kee-audio-codec/SKILL.md) is included so that
+Copilot can automatically encode and decode audio using this codec.
+Place the `kee-audio-codec/` folder (or reference it) in your
+`.copilot/skills/` directory to enable it.
+This is compatible with claude, cursor and other agents as well. Feel free to use it.
+
 ## Running tests
 
 ```bash
